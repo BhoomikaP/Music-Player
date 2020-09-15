@@ -1,0 +1,144 @@
+	<!DOCTYPE html>
+	<head>
+		<title>Home Page</title>
+		<style>
+		body{
+    margin:0;
+    padding:0;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+	background-image:url("C:/Users/Harshitha P/Desktop/project1/New folder/login1.jpg")
+    }
+header{
+    height:100px;
+    position:fixed;
+    width:100%;
+    top:0;
+}
+.logo{
+    float:left;
+    margin-left:9%;
+	color:white;
+}        
+.menu{
+    float:right;
+    margin-right:2%;
+    margin-top:25px;
+}
+.menu ul{
+    margin:0px;
+    padding:0px;
+    list-style:none;
+}
+.menu ul li{
+    float:left;
+    padding: 12px;
+}
+.menu ul li a{
+    color:#fff;
+    text-decoration:none;
+    font-size: 20px;
+}
+form{
+    font-size:26px;
+    color:white; 
+	margin-top:290px;	
+}
+button{
+    margin-top:30px;
+    color:white;
+    padding: 12px 15px;
+    width: 30%;
+    border-radius: 8px;
+}
+input{
+    padding: 15px 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+	width:30%;
+	margin-left:30px;
+	margin-top:2%;
+    
+}
+label{
+    margin-top: 2%;
+}
+p{
+font-size:55px;
+}
+	</style>
+	</head>
+	<body>
+	<header>
+		<div class="logo">
+	
+		<h1 style="margin-top:17%;">ONE &nbsp SOUND</h1>
+		</div>
+        <div class="menu collapse navbar-collapse">
+                <nav>
+                <ul>
+                <li><a href="homepage.html" >Home</a></li>
+                <li><a href="">Albums</a></li>
+                <li><a href="">Playlists</a></li>
+                <li><a href="">Artists</a></li>
+                <li><a href="">Radio</a></li>
+                <li><a href="">Contacts</a></li>
+				
+                <li style="padding-left:40px;" ><a href="">Log in/Register</a></li>
+                </ul>
+                </nav>
+        </div>
+	</header>
+<form action="" method="POST"> 
+<p style="margin-left:95px"> Say Hello !!!</p>
+    <br> 
+  <input type="text" name="Username" placeholder="Enter your Username" style="background-color:rgb(232,232,232);height: 40px;top:400px;"><br>
+  <input type="password" name="password" placeholder="Enter your Password" style="background-color:rgb(232,232,232);height: 40px;" >
+  <br><br>
+  <button type="submit" class="admin"  style="float:left;height: 45px;width:150px;background-color:#3366ff;top:198px;left:40px;margin-left:5%;font-size:18px;" value="login" >Log In</button>
+  <button class="login" style="float:left;height: 45px;width:150px;background-color:#ff3399;top:198px;left:40px;margin-left:20px;font-size:18px;" >Register</button>
+  
+  <label style="float:left;font-size:15px;margin-left: 2%" >
+     <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+  <br>
+</form> 
+<?php  
+if(isset($_POST["submit"])){  
+  
+if(!empty($_POST['user']) && !empty($_POST['pass'])) {  
+    $user=$_POST['user'];  
+    $pass=$_POST['pass'];  
+  
+    $con=mysql_connect('localhost','root','') or die(mysql_error());  
+    mysql_select_db('user_registration') or die("cannot select DB");  
+  
+    $query=mysql_query("SELECT * FROM login WHERE username='".$user."' AND password='".$pass."'");  
+    $numrows=mysql_num_rows($query);  
+    if($numrows!=0)  
+    {  
+    while($row=mysql_fetch_assoc($query))  
+    {  
+    $dbusername=$row['username'];  
+    $dbpassword=$row['password'];  
+    }  
+  
+    if($user == $dbusername && $pass == $dbpassword)  
+    {  
+    session_start();  
+    $_SESSION['sess_user']=$user;  
+  
+    /* Redirect browser */  
+    header("Location: member.php");  
+    }  
+    } else {  
+    echo "Invalid username or password!";  
+    }  
+  
+} else {  
+    echo "All fields are required!";  
+}  
+}  
+?>  
+</body>
+</html>
